@@ -1,38 +1,56 @@
-import sequelize from '../config/connection.js'
-import User from '../models/user.js';
-import Post from '../models/post.js';
-import Comment from '../models/comment.js'
+const sequelize = require('../config/connection.js');
+const User = require('../models/user.js');
+const Post = require('../models/post.js');
+const Comment = require('../models/comment.js');
 
+const userData = require('./userData.json');
+const postData = require('./blogPosts.json');
+const commentData = require('./commentData.json');
 
-
-import userData from './userData.json';
-import postData from './blogPosts.json';
-import commentData from './commentData.json';
-
+// Seed the database
 const seedDatabase = async () => {
-    await sequelize.sync({ force: true })
-    
+    // Sync the models
+    await sequelize.sync({ force: true });
+
+    // Create users
     const users = await User.bulkCreate(userData, {
         individualHooks: true,
         returning: true,
-    })
-    console.log(users)
+    });
 
+    console.log(users);
+
+    // Create posts
     for (const post of postData) {
-        console.log(post)
+        console.log(post);
+        const randomUser = users[Math.floor(Math.random() * users.length)];
+
         await Post.create({
             ...post,
-            userId: users[Math.floor(Math.random() * users.length)].id
-        })
+            userId: randomUser.id,
+            username: randomUser.username,
+        });
     }
-    const posts = await Post.findAll()
+
+    // Get all posts
+    const posts = await Post.findAll();
+
+    // Create comments
     for (const comment of commentData) {
+        const randomUser = users[Math.floor(Math.random() * users.length)];
+        const randomPost = posts[Math.floor(Math.random() * posts.length)];
+
         await Comment.create({
             ...comment,
-            postId: posts[Math.floor(Math.random() * posts.length)].id,
-            userId: users[Math.floor(Math.random() * users.length)].id
-        })
+            userId: randomUser.id,
+            username: randomUser.username,
+            postId: randomPost.id,
+        });
     }
-    process.exit(0)
-}
-seedDatabase()
+
+    // Exit the process
+    process.exit(0);
+};
+
+// Execute the seedDatabase function
+seedDatabase();
