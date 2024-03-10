@@ -1,0 +1,42 @@
+<div class="page-header">
+<div class="header-card">
+    <h2>Tech Blog</h2>
+</div>
+</div>
+
+{{#if logged_in}}
+<button id="add-comment">Add comment</button>
+{{else}}
+<p id="login-msg">Please log in to add a comment</p>
+{{/if}}
+
+<div class="home-post">
+<div class="home-post-header" id="{{post.id}}">
+    <h2>{{post.title}}</h2><p>Posted by {{post.username}} on {{format_date post.date_created}}</p>
+</div>
+
+<p>{{post.post}}</p>
+</div>
+
+<div class="add-comment-form" id="comment-form">
+    <div class="add-comment-header"></div>
+    <form>
+        <div class="form-group">
+            <label for="comment-desc">Comment</label>
+            <input class="form-input" id="comment" name="comment-desc"/>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="submit" id="comment-submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+{{#each comments as |comment|}}
+<div class="comment">
+    <div class="comment-header"></div>
+    <p>{{comment.comment}}</p>
+    <p>-{{comment.username}}, {{format_date comment.date_created}}</p>
+</div>
+{{/each}}
+
+<script src="/js/viewpost.js"></script>

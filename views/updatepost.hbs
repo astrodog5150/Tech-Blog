@@ -1,0 +1,28 @@
+<div class="page-header">
+  <div class="header-card">
+    <h2>Dashboard</h2>
+  </div>
+</div>
+
+<div class="update-post-form">
+  <div class="update-post-header">
+    <h2>Edit Post</h2>
+  </div>
+
+  <form>
+    <div class="form-group">
+      <label for="post-title">Title</label>
+      <input class="form-input" id="post-title" name="project-title" value="{{post.title}}"/>
+    </div>
+    <div class="form-group">
+      <label for="post-content">Content</label>
+      <input class="form-input" id="post-content" name="post-content" value="{{post.post}}"/>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="submit update" id="{{post.id}}">Update Post</button>
+      <button type="submit" class="submit delete" id="{{post.id}}">Delete</button>
+    </div>
+  </form>
+</div>
+
+<script src="/js/updatepost.js"></script>

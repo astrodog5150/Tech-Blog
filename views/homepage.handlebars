@@ -1,0 +1,17 @@
+<div class="page-header">
+  <div class="header-card">
+    <h2>Tech Blog</h2>
+  </div>
+</div>
+
+{{#each posts as |post| }}
+<div class="home-post" id="{{post.id}}">
+  <div class="home-post-header" id="{{post.id}}">
+    <h2 id="{{post.id}}">{{post.title}}</h2><p>Posted by {{post.username}} on {{format_date post.date_created}}</p>
+  </div>
+
+  <p id="{{post.id}}">{{post.post}}</p>
+</div>
+{{/each}}
+
+<script src="/js/homepage.js"></script>
