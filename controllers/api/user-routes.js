@@ -16,6 +16,28 @@ router.post('/', async (req, res) => {
   }
 });
 
+// allows a new user to signup to the page using the request body 
+router.post('/signup', async (req, res) => {
+  try {
+      const newUser = await User.create({
+          username: req.body.username,
+          email: req.body.email,
+          password: req.body.password
+      });
+
+      console.log('New User:', newUser);
+
+      req.session.save(() => {
+          req.session.userId = newUser.id;
+          req.session.logged_in = true;
+          res.status(200).json(newUser);
+      });
+  } catch (err) {
+      console.error(err);
+      res.status(400).json(err);
+  }
+});
+
 //login
 router.post('/login', async (req, res) => {
   try {

@@ -15,7 +15,7 @@ const signInFormHandler = async (event) => {
       if (response.ok) {
         document.location.replace('/dashboard');
       } else {
-        alert('Username already taken');
+        alert('Error signing up');
       }
     }
   };
